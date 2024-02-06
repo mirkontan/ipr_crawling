@@ -249,6 +249,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].fillna("-")
     trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'商标类型').str[0]
     trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'">').str[1]
+    trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].fillna("-")
     trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'</div>').str[0]
     trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'至').str[1]
     
@@ -256,6 +257,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows['IPR_TYPEhtml'] = trademarks_df_cn_rows['IPR_TYPEhtml'].fillna("-")
     trademarks_df_cn_rows['IPR_TYPEhtml'] = trademarks_df_cn_rows['IPR_TYPEhtml'].str.split(r'类似群组').str[0]
     trademarks_df_cn_rows['IPR_TYPEhtml'] = trademarks_df_cn_rows['IPR_TYPEhtml'].str.split(r'">').str[1]
+    trademarks_df_cn_rows['IPR_TYPEhtml'] = trademarks_df_cn_rows['IPR_TYPEhtml'].fillna("-")
     trademarks_df_cn_rows['IPR_TYPEhtml'] = trademarks_df_cn_rows['IPR_TYPEhtml'].str.split(r'</div>').str[0]
 
     trademarks_df_cn_rows['IPR_SUBCLASSES'] = trademarks_df_cn_rows['HTML'].str.split(r'类似群组').str[1]
@@ -271,12 +273,14 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows['IPR_SUBCLASSESdetails'] = trademarks_df_cn_rows['IPR_SUBCLASSESdetails'].str.replace(r'</div><div class="aFvDQAhY">', '; ', regex=False)
     trademarks_df_cn_rows['IPR_SUBCLASSESdetails'] = trademarks_df_cn_rows['IPR_SUBCLASSESdetails'].str.replace(r'<!-- -->-<!-- -->', ': ', regex=False)
     trademarks_df_cn_rows['IPR_SUBCLASSESdetails'] = trademarks_df_cn_rows['IPR_SUBCLASSESdetails'].str.split(r'"aFvDQAhY">').str[1]
+    trademarks_df_cn_rows['IPR_SUBCLASSESdetails'] = trademarks_df_cn_rows['IPR_SUBCLASSESdetails'].fillna("-")
     trademarks_df_cn_rows['IPR_SUBCLASSESdetails'] = trademarks_df_cn_rows['IPR_SUBCLASSESdetails'].str.split(r'<div').str[0]
     trademarks_df_cn_rows['IPR_SUBCLASSESdetails'] = trademarks_df_cn_rows['IPR_SUBCLASSESdetails'].str.split(r'</div></div></div>').str[0]
     
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['HTML'].str.split(r'申请人</div><div class="').str[1]
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].fillna("-")
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].str.split(r'申请人地址</div>').str[0]
+    trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].fillna("-")
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].str.split(r'</div>').str[0]
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].str.split(r'">').str[1]
 
