@@ -203,6 +203,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows = trademarks_df[(trademarks_df['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA") | (trademarks_df['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA")]
 
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['HTML'].str.split(r'<img class=').str[1]
+    trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].fillna("-")
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].str.split(r'" src="').str[1]
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].str.split(r'"/>').str[0]
     
