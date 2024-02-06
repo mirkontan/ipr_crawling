@@ -209,6 +209,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].str.split(r'"/>').str[0]
     
     trademarks_df_cn_rows['IPR_REG_NAME'] = trademarks_df_cn_rows['HTML'].str.split(r'商标名称').str[1]
+    trademarks_df_cn_rows['IPR_REG_NAME'] = trademarks_df_cn_rows['IPR_REG_NAME'].fillna("-")
     trademarks_df_cn_rows['IPR_REG_NAME'] = trademarks_df_cn_rows['IPR_REG_NAME'].str.split(r'商标分类').str[0]
     trademarks_df_cn_rows['IPR_REG_NAME'] = trademarks_df_cn_rows['IPR_REG_NAME'].str.split(r'</div><div class="').str[1]
     trademarks_df_cn_rows['IPR_REG_NAME'] = trademarks_df_cn_rows['IPR_REG_NAME'].str.split(r'">').str[1]
