@@ -284,6 +284,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].fillna("-")
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].str.split(r'</div>').str[0]
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].str.split(r'">').str[1]
+    trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].fillna("-")
     trademarks_df_cn_rows['IPR_HOLDER'] = trademarks_df_cn_rows['IPR_HOLDER'].str.replace(r'amp;', '')
 
 
