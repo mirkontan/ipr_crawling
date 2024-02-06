@@ -24,7 +24,7 @@ def process_xlsx_file(xlsx_file):
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.tmdn.org/tmview/welcome#/tmview/detail/EM5000000{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
-            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" | row['IPR_JURISDICTION'] or "PEOPLE`S REPUBLIC OF CHINA":
+            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 iprclass = row['IPR_NICE_CLASS']
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword={row["IPR_REGISTRATION_NUMBER"]}&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
@@ -39,7 +39,7 @@ def process_xlsx_file(xlsx_file):
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.tmdn.org/tmview/welcome#/tmview/detail/EM5000000{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
-            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" | row['IPR_JURISDICTION'] or "PEOPLE`S REPUBLIC OF CHINA":
+            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 iprclass = row['IPR_NICE_CLASS']
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword=45059080&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
