@@ -131,7 +131,7 @@ def process_xlsx_file(xlsx_file):
         if pd.notna(url):
             # st.header(f"URL: {url}")
             urlcount += 1
-            if "PEOPLE'S REPUBLIC OF CHINA" in jurisdiction:
+            if "REPUBLIC OF CHINA" in jurisdiction:
                 html_content = cn_extract_section_from_url(url)
             elif 'INTERNATIONAL' in jurisdiction:
                 html_content = int_extract_section_from_url(url)
@@ -200,7 +200,8 @@ def process_xlsx_file(xlsx_file):
     # st.write(trademarks_df_indo_rows)
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'PEOPLE'S REPUBLIC OF CHINA'
-    trademarks_df_cn_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"]
+    trademarks_df_cn_rows = trademarks_df[(trademarks_df['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA") | (trademarks_df['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA")]
+
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['HTML'].str.split(r'<img class=').str[1]
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].str.split(r'" src="').str[1]
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].str.split(r'"/>').str[0]
