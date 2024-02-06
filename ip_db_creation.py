@@ -228,10 +228,14 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_cn_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_cn_rows['IPR_NICE_CLASSES_ALL'].str.split(r'</div>').str[0]
 
     trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['HTML'].str.split(r'商标状态').str[1]
+    trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].fillna("-")
     trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].str.split(r'注册号').str[0]
     trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].str.split(r'</div><div class="').str[1]
     trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].str.split(r'"><div').str[1]
+    trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].fillna("-")
     trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].str.split(r'">').str[1]
+
+
     trademarks_df_cn_rows['IPR_STATUS'] = trademarks_df_cn_rows['IPR_STATUS'].str.split(r'</div>').str[0]
     
     trademarks_df_cn_rows['IPR_REGISTRATION_DATE'] = trademarks_df_cn_rows['HTML'].str.split(r'注册公告日期</div><div class="').str[1]
