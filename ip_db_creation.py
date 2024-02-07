@@ -121,7 +121,27 @@ def process_xlsx_file(xlsx_file):
                 return f"Failed to fetch HTML content from {url}"
         except requests.exceptions.RequestException as e:
             return f"An error occurred: {e}"
-        
+
+    
+    # Function to fetch HTML content and extract a specific section
+    def eu_extract_section_from_url(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            # Parse the HTML content
+            soup = BeautifulSoup(response.text, 'html.parser')
+            # Find the section containing the table
+            section = soup.find('div', id='tbl_Containing')
+            if section:
+                return section.prettify()  # Return the entire section with formatting
+            else:
+                return None
+        else:
+            print("Error: Unable to retrieve URL - Status code:", response.status_code)
+            return None
+    except Exception as e:
+        print("Error occurred:", e)
+        return None
 
     df_combined['HTML'] = ""
     
@@ -139,7 +159,7 @@ def process_xlsx_file(xlsx_file):
             elif 'INDONESIAN' in jurisdiction:
                 html_content = indo_extract_section_from_url(url)
             elif 'EUROPE' in jurisdiction:
-                html_content = fetch_html_content(url)   
+                html_content = eu_extract_section_from_url(url)   
                 # st.write(html_content)
             else:
                 html_content = fetch_html_content(url, timeout=50)
@@ -159,9 +179,9 @@ def process_xlsx_file(xlsx_file):
     # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
     st.write(trademarks_df_eu_rows)
-    trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<tbody id="tbl_Containing"><tr>').str[1]
-    trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[1]
-    trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[0]
+    # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<tbody id="tbl_Containing"><tr>').str[1]
+    # trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[1]
+    # trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[0]
 
 
 
