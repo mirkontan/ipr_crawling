@@ -180,9 +180,6 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
     st.write(trademarks_df_eu_rows)
 
-        
-    # Create a DataFrame
-    trademarks_df_eu_rows = pd.DataFrame(data)
     
     # Define a function to extract data from HTML
     def extract_data(html_content):
