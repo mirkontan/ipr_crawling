@@ -195,13 +195,15 @@ def process_xlsx_file(xlsx_file):
                     inhalt = cells[3].text.strip()
                     data[kriterium] = inhalt
         return data
+
     
     # Apply the function to each row of the DataFrame
     extracted_data = trademarks_df_eu_rows['HTML'].apply(extract_data)
     
     # Convert the extracted data to a DataFrame and concatenate it with the original DataFrame
     extracted_df = pd.DataFrame(extracted_data.tolist())
-    result_df = pd.concat([trademarks_df_eu_rows, extracted_df], axis=1
+    result_df = pd.concat([trademarks_df_eu_rows, extracted_df], axis=1)
+
    
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<tbody id="tbl_Containing"><tr>').str[1]
     # trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[1]
