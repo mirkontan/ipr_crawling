@@ -174,11 +174,10 @@ def process_xlsx_file(xlsx_file):
     invention_patents_df = df_combined[df_combined['IPR_TYPE'] == 'INVENTION PATENT']
     
 
-    st.write(trademarks_df_eu_rows)
-    
+       
     # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
-   
+    st.write(trademarks_df_eu_rows)   
     trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
     
     trademarks_df_eu_rows['IPR_HOLDER'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Inhaber</td>').str[1]
