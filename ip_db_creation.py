@@ -75,7 +75,11 @@ def process_xlsx_file(xlsx_file):
                 return f"Failed to fetch HTML content from {url}"
         except requests.exceptions.RequestException as e:
             return f"An error occurred: {e}"
-
+     
+    
+    def eu_extract_section_from_url(url):
+    
+        
     # Function to fetch and return HTML content with a timeout
     def fetch_html_content(url, timeout=50):
         try:
@@ -137,14 +141,15 @@ def process_xlsx_file(xlsx_file):
                 html_content = int_extract_section_from_url(url)
             elif 'INDONESIAN' in jurisdiction:
                 html_content = indo_extract_section_from_url(url)
-
+            elif 'EUROPE' in jurisdiction:
+                html_content = eu_extract_section_from_url(url)   
                 # st.write(html_content)
-
             else:
                 html_content = fetch_html_content(url, timeout=50)
             if html_content:
                 # Assign the HTML content to df_combined['HTML']
                 df_combined.at[index, 'HTML'] = html_content
+                
     st.header(f"IPRs Analyzed: {urlcount}")
     trademarks_df = df_combined[df_combined['IPR_TYPE'] == 'TRADEMARK']
     copyright_df = df_combined[df_combined['IPR_TYPE'] == 'COPYRIGHT']
@@ -153,6 +158,31 @@ def process_xlsx_file(xlsx_file):
     
 
     # st.write(trademarks_df)
+    
+    # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
+    trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
+    st.write(trademarks_df_eu_rows)
+    
+    # Parse the HTML content from the 'HTML' column of the DataFrame
+    for index, row in trademarks_df_eu_rows.iterrows():
+        html_content = row['HTML']
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Extract information from the HTML snippet
+        trademark = soup.find('p', class_='ResultPara').text.strip()
+        classes = soup.find('td', class_='viewdetails_desktop').find('span').text.strip()
+        status = soup.find('td', class_='viewdetails_desktop').find('span').text.strip()
+        numbers = soup.find_all('td', class_='viewdetails_desktop')[1].text.strip()
+        applicant = soup.find_all('td', class_='viewdetails_desktop')[2].text.strip()
+        
+        # Assign extracted values to new columns
+        trademarks_df_eu_rows.loc[index, 'Trademark'] = trademark
+        trademarks_df_eu_rows.loc[index, 'Classes'] = classes
+        trademarks_df_eu_rows.loc[index, 'Status'] = status
+        trademarks_df_eu_rows.loc[index, 'Numbers'] = numbers
+        trademarks_df_eu_rows.loc[index, 'Applicant'] = applicant
+    
+    st.write(trademarks_df_eu_rows)
 
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
@@ -444,10 +474,6 @@ def process_xlsx_file(xlsx_file):
     # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'">').str[1]
 
     # st.write(trademarks_df_int_rows)
-
-
-    trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
-
 
 
     trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows], ignore_index=True)
