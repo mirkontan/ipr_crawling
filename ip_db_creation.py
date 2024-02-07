@@ -203,7 +203,7 @@ def process_xlsx_file(xlsx_file):
     extracted_df = pd.DataFrame(extracted_data.tolist())
     result_df = pd.concat([trademarks_df_eu_rows, extracted_df], axis=1)
     
-    print(result_df)
+    st.write(result_df)
 
    
     trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
