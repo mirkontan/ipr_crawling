@@ -125,23 +125,23 @@ def process_xlsx_file(xlsx_file):
     
     # Function to fetch HTML content and extract a specific section
     def eu_extract_section_from_url(url):
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            # Parse the HTML content
-            soup = BeautifulSoup(response.text, 'html.parser')
-            # Find the section containing the table
-            section = soup.find('div', id='tbl_Containing')
-            if section:
-                return section.prettify()  # Return the entire section with formatting
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                # Parse the HTML content
+                soup = BeautifulSoup(response.text, 'html.parser')
+                # Find the section containing the table
+                section = soup.find('div', id='tbl_Containing')
+                if section:
+                    return section.prettify()  # Return the entire section with formatting
+                else:
+                    return None
             else:
+                print("Error: Unable to retrieve URL - Status code:", response.status_code)
                 return None
-        else:
-            print("Error: Unable to retrieve URL - Status code:", response.status_code)
+        except Exception as e:
+            print("Error occurred:", e)
             return None
-    except Exception as e:
-        print("Error occurred:", e)
-        return None
 
     df_combined['HTML'] = ""
     
