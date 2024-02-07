@@ -187,7 +187,14 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows['IPR_HOLDER'] = trademarks_df_eu_rows['IPR_HOLDER'].str.replace(r'&amp;', '&', regex=False)
     
     trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Anmeldetag</td>').str[1]
+    trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['IPR_REGISTRATION_DATE'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
+    trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['IPR_REGISTRATION_DATE'].str.split(r'Inhalt">').str[1]
+        
     trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Ablaufdatum</td>').str[1]
+    trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['IPR_EXPIRATION_DATE'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
+    trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['IPR_EXPIRATION_DATE'].str.split(r'Inhalt">').str[1]
+
+    
     trademarks_df_eu_rows['IPR_IMAGE_URL'] = trademarks_df_eu_rows['HTML'].str.split(r'<img src="').str[1]
     trademarks_df_eu_rows['IPR_IMAGE_URL'] = trademarks_df_eu_rows['IPR_IMAGE_URL'].str.split(r'" alt="').str[0]
     
