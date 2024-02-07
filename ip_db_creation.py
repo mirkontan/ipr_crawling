@@ -178,11 +178,13 @@ def process_xlsx_file(xlsx_file):
         status_element = soup.find('td', class_='viewdetails_desktop')
         status = status_element.find('span').text.strip() if status_element else None
         
-        numbers_element = soup.find_all('td', class_='viewdetails_desktop')[1]
-        numbers = numbers_element.text.strip() if numbers_element else None
+        numbers_elements = soup.find_all('td', class_='viewdetails_desktop')
+        numbers = None
+        if len(numbers_elements) > 1:
+            numbers = numbers_elements[1].text.strip()
         
-        applicant_element = soup.find_all('td', class_='viewdetails_desktop')[2]
-        applicant = applicant_element.text.strip() if applicant_element else None
+        applicant_elements = soup.find_all('td', class_='viewdetails_desktop')
+        applicant = applicant_elements[2].text.strip() if len(applicant_elements) > 2 else None
         
         # Assign extracted values to new columns
         trademarks_df_eu_rows.loc[index, 'Trademark'] = trademark
@@ -190,6 +192,7 @@ def process_xlsx_file(xlsx_file):
         trademarks_df_eu_rows.loc[index, 'Status'] = status
         trademarks_df_eu_rows.loc[index, 'Numbers'] = numbers
         trademarks_df_eu_rows.loc[index, 'Applicant'] = applicant
+
 
 
     
