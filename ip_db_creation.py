@@ -159,39 +159,10 @@ def process_xlsx_file(xlsx_file):
     # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
     st.write(trademarks_df_eu_rows)
+    trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<tbody id="tbl_Containing"><tr>').str[1]
+    trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[1]
+    trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[0]
 
-    
-
-
-    # Parse the HTML content from the 'HTML' column of the DataFrame
-    for index, row in trademarks_df_eu_rows.iterrows():
-        html_content = row['HTML']
-        soup = BeautifulSoup(html_content, 'html.parser')
-        
-        # Extract information from the HTML snippet
-        trademark_element = soup.find('p', class_='ResultPara')
-        trademark = trademark_element.text.strip() if trademark_element else None
-        
-        classes_element = soup.find('td', class_='viewdetails_desktop')
-        classes = classes_element.find('span').text.strip() if classes_element else None
-        
-        status_element = soup.find('td', class_='viewdetails_desktop')
-        status = status_element.find('span').text.strip() if status_element else None
-        
-        numbers_elements = soup.find_all('td', class_='viewdetails_desktop')
-        numbers = None
-        if len(numbers_elements) > 1:
-            numbers = numbers_elements[1].text.strip()
-        
-        applicant_elements = soup.find_all('td', class_='viewdetails_desktop')
-        applicant = applicant_elements[2].text.strip() if len(applicant_elements) > 2 else None
-        
-        # Assign extracted values to new columns
-        trademarks_df_eu_rows.loc[index, 'Trademark'] = trademark
-        trademarks_df_eu_rows.loc[index, 'Classes'] = classes
-        trademarks_df_eu_rows.loc[index, 'Status'] = status
-        trademarks_df_eu_rows.loc[index, 'Numbers'] = numbers
-        trademarks_df_eu_rows.loc[index, 'Applicant'] = applicant
 
 
 
