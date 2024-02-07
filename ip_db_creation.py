@@ -21,7 +21,7 @@ def process_xlsx_file(xlsx_file):
     def create_ipr_url(row):
         if row['IPR_TYPE'] == 'TRADEMARK':
             if row['IPR_JURISDICTION'] == 'EUROPE':
-                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.tmdn.org/tmview/welcome#/tmview/detail/EM5000000{row["IPR_REGISTRATION_NUMBER"]}'
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://euipo.europa.eu/eSearch/#basic/1+1+1+1/100+100+100+100/{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
@@ -473,10 +473,10 @@ def process_xlsx_file(xlsx_file):
     df_combined_copy = df_combined.copy()
 
     # Drop the 'HTML' column
-    df_combined.drop(columns=['HTML'], inplace=True)
+    # df_combined.drop(columns=['HTML'], inplace=True)
 
     # Reorder the columns
-    new_column_order = ['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
+    new_column_order = ['HTML', 'id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
                         'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_LINK_TO_ONLINE_DATABASE', 
                         'IPR_REGISTRATION_NUMBER', 'IPR_DESIGNATIONS', 'NOTES', 'IPR_REG_NAME2', 'IPR_REG_NAME', 
                         'IPR_STATUS', 'IPR_TYPEhtml', 'IPR_HOLDER', 'IPR_NICE_CLASSES_ALL', 'IPR_SUBCLASSES', 
