@@ -21,7 +21,7 @@ def process_xlsx_file(xlsx_file):
     def create_ipr_url(row):
         if row['IPR_TYPE'] == 'TRADEMARK':
             if row['IPR_JURISDICTION'] == 'EUROPE':
-                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/quicksearch/brand/EM500000{row["IPR_REGISTRATION_NUMBER"]}'
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/quicksearch/results?sort=score%20desc&start=0&rows=30&asStructure=%7B%22_id%22:%225ac1%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%225ac2%22,%22key%22:%22number%22,%22value%22:%22{row["IPR_REGISTRATION_NUMBER"]}","strategy":"Either"%7D%5D%7D&_=1707319907766&searchBy=number&fg=_void_'
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
