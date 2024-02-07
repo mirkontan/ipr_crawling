@@ -36,7 +36,7 @@ def process_xlsx_file(xlsx_file):
             return row
         elif row['IPR_TYPE'] == 'DESIGN PATENT':
             if row['IPR_JURISDICTION'] == 'EUROPE':
-                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.tmdn.org/tmview/welcome#/tmview/detail/EM5000000{row["IPR_REGISTRATION_NUMBER"]}'
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://euipo.europa.eu/eSearch/#basic/1+1+1+1/100+100+100+100/{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
@@ -471,7 +471,8 @@ def process_xlsx_file(xlsx_file):
 
     # Duplicate df_combined
     df_combined_copy = df_combined.copy()
-
+    st.write(df_combined_copy)
+    
     # Drop the 'HTML' column
     # df_combined.drop(columns=['HTML'], inplace=True)
 
