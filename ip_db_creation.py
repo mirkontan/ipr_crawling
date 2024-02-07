@@ -75,10 +75,7 @@ def process_xlsx_file(xlsx_file):
                 return f"Failed to fetch HTML content from {url}"
         except requests.exceptions.RequestException as e:
             return f"An error occurred: {e}"
-     
-    
-    def eu_extract_section_from_url(url):
-    
+         
         
     # Function to fetch and return HTML content with a timeout
     def fetch_html_content(url, timeout=50):
