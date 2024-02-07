@@ -207,7 +207,7 @@ def process_xlsx_file(xlsx_file):
     # trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[1]
     # trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[0]
 
-    # st.write(trademarks_df_eu_rows)    
+    st.write(trademarks_df_eu_rows)    
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
     trademarks_df_indo_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "INDONESIA"]
