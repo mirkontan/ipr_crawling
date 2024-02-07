@@ -178,38 +178,13 @@ def process_xlsx_file(xlsx_file):
     
     # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
-    st.write(trademarks_df_eu_rows)
-
-    
-    # Define a function to extract data from HTML
-    def extract_data(html_content):
-        soup = BeautifulSoup(html_content, 'html.parser')
-        table_body = soup.find('tbody')
-        data = {}
-        if table_body:
-            rows = table_body.find_all('tr')
-            for row in rows:
-                cells = row.find_all('td')
-                if len(cells) == 4:
-                    kriterium = cells[1].text.strip()
-                    inhalt = cells[3].text.strip()
-                    data[kriterium] = inhalt
-        return data
-    
-    # Apply the function to each row of the DataFrame
-    extracted_data = trademarks_df_eu_rows['HTML'].apply(extract_data)
-    
-    # Convert the extracted data to a DataFrame and concatenate it with the original DataFrame
-    extracted_df = pd.DataFrame(extracted_data.tolist())
-    result_df = pd.concat([trademarks_df_eu_rows, extracted_df], axis=1)
-    
-    st.write('ESTRAZIONE')
-    st.write(extracted_df)
-
    
     trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
-    # trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[1]
-    # trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<p class="ResultPara">').str[0]
+    trademarks_df_eu_rows['IPR_HOLDER'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Inhaber</td>').str[1]
+    trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Anmeldetag</td>').str[1]
+    trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Ablaufdatum</td>').str[1]
+    trademarks_df_eu_rows['IPR_IMAGE_URL'] = trademarks_df_eu_rows['HTML'].str.split(r'<img src="').str[1]
+    trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Klasse(n)</td>').str[1]
 
     st.write(trademarks_df_eu_rows)    
 
