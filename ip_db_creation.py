@@ -139,7 +139,7 @@ def process_xlsx_file(xlsx_file):
             elif 'INDONESIAN' in jurisdiction:
                 html_content = indo_extract_section_from_url(url)
             elif 'EUROPE' in jurisdiction:
-                html_content = eu_extract_section_from_url(url)   
+                html_content = fetch_html_content(url)   
                 # st.write(html_content)
             else:
                 html_content = fetch_html_content(url, timeout=50)
