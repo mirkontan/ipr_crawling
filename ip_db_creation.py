@@ -162,6 +162,7 @@ def process_xlsx_file(xlsx_file):
 
     
 
+
     # Parse the HTML content from the 'HTML' column of the DataFrame
     for index, row in trademarks_df_eu_rows.iterrows():
         html_content = row['HTML']
@@ -169,34 +170,19 @@ def process_xlsx_file(xlsx_file):
         
         # Extract information from the HTML snippet
         trademark_element = soup.find('p', class_='ResultPara')
-        if trademark_element:
-            trademark = trademark_element.text.strip()
-        else:
-            trademark = None
+        trademark = trademark_element.text.strip() if trademark_element else None
         
-        classes_element = soup.find('td', class_='viewdetails_desktop').find('span')
-        if classes_element:
-            classes = classes_element.text.strip()
-        else:
-            classes = None
+        classes_element = soup.find('td', class_='viewdetails_desktop')
+        classes = classes_element.find('span').text.strip() if classes_element else None
         
-        status_element = soup.find('td', class_='viewdetails_desktop').find('span')
-        if status_element:
-            status = status_element.text.strip()
-        else:
-            status = None
+        status_element = soup.find('td', class_='viewdetails_desktop')
+        status = status_element.find('span').text.strip() if status_element else None
         
         numbers_element = soup.find_all('td', class_='viewdetails_desktop')[1]
-        if numbers_element:
-            numbers = numbers_element.text.strip()
-        else:
-            numbers = None
+        numbers = numbers_element.text.strip() if numbers_element else None
         
         applicant_element = soup.find_all('td', class_='viewdetails_desktop')[2]
-        if applicant_element:
-            applicant = applicant_element.text.strip()
-        else:
-            applicant = None
+        applicant = applicant_element.text.strip() if applicant_element else None
         
         # Assign extracted values to new columns
         trademarks_df_eu_rows.loc[index, 'Trademark'] = trademark
@@ -204,6 +190,7 @@ def process_xlsx_file(xlsx_file):
         trademarks_df_eu_rows.loc[index, 'Status'] = status
         trademarks_df_eu_rows.loc[index, 'Numbers'] = numbers
         trademarks_df_eu_rows.loc[index, 'Applicant'] = applicant
+
 
     
     st.write(trademarks_df_eu_rows)
