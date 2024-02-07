@@ -78,7 +78,7 @@ def process_xlsx_file(xlsx_file):
          
         
     # Function to fetch and return HTML content with a timeout
-    def fetch_html_content(url, timeout=200):
+    def fetch_html_content(url, timeout=50):
         try:
             response = requests.get(url, timeout=timeout)
             if response.status_code == 200:
@@ -162,7 +162,7 @@ def process_xlsx_file(xlsx_file):
                 html_content = fetch_html_content(url)   
                 # st.write(html_content)
             else:
-                html_content = fetch_html_content(url, timeout=50)
+                html_content = fetch_html_content(url, timeout=200)
             if html_content:
                 # Assign the HTML content to df_combined['HTML']
                 df_combined.at[index, 'HTML'] = html_content
