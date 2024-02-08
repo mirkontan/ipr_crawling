@@ -16,6 +16,7 @@ def process_xlsx_file(xlsx_file):
     df_import['IPR_REGISTRATION_NUMBER'] = df_import['IPR'].str.split(r' - ').str[0]
     df_import['IPR_REGISTRATION_NUMBER'] = df_import['IPR_REGISTRATION_NUMBER'].str.split(r'n. ').str[1]
     df_import['IPR_REGISTRATION_NUMBER'] = df_import['IPR_REGISTRATION_NUMBER'].str.split(r' \(').str[0]
+    df_import['IPR_DATABASE_URL'] = '-'
 
 
 
