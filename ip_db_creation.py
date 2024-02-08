@@ -217,6 +217,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
     trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'Inhalt">').str[1]
 
+
     def convert_date_format(date_str):
         try:
             # Parse the input date string
@@ -226,7 +227,12 @@ def process_xlsx_file(xlsx_file):
             return formatted_date
         except ValueError:
             # If the date format is not as expected, return None or any other default value
-            return date_str  # You can modify this line to return a different default value if needed
+            return None  # You can modify this line to return a different default value if needed
+    
+    # Apply the function to the specified columns
+    trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['IPR_EXPIRATION_DATE'].apply(convert_date_format)
+    trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['IPR_REGISTRATION_DATE'].apply(convert_date_format)
+
 
     
     # Apply the function to the specified columns
