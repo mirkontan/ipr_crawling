@@ -202,6 +202,12 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
     trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'].str.split(r'Inhalt">').str[1]
 
+    trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Aktenzustand Unionsmarken</td>').str[1]
+    trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
+    trademarks_df_eu_rows['IPR_STATUS'] = IPR_STATUS['IPR_NICE_CLASSES_ALL'].str.split(r'Inhalt">').str[1]
+
+    
+
     st.write(trademarks_df_eu_rows)    
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
