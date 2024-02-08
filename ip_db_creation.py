@@ -533,7 +533,7 @@ def process_xlsx_file(xlsx_file):
     st.write(df_combined_copy)
     
     # Drop the 'HTML' column
-    # df_combined.drop(columns=['HTML'], inplace=True)
+    df_combined.drop(columns=['HTML'], inplace=True)
 
     # Reorder the columns
     new_column_order = ['HTML', 'id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
