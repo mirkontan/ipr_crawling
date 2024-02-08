@@ -568,10 +568,6 @@ def process_xlsx_file(xlsx_file):
     # copyright_df = df_import[df_import['IPR_TYPE'] == 'COPYRIGHT']
     # otheripr_df = df_import[df_import['IPR_TYPE'] == 'OTHER IPR']
     # design_patents_df = df_import[df_import['IPR_TYPE'] == 'DESIGN PATENT']
-
-
-    # Apply the function to create 'IPR_LINK_TO_ONLINE_DATABASE' column
-    df_combined = df_combined.apply(create_ipr_db_url, axis=1)
     
     
     # Reorder the columns
