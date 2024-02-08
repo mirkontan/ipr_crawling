@@ -536,8 +536,8 @@ def process_xlsx_file(xlsx_file):
     # Drop the 'HTML' column
     df_combined.drop(columns=['HTML'], inplace=True)
     
-    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_EXPIRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%b.%Y').strftime('%Y-%m-%d'))
-    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_REGISTRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%b.%Y').strftime('%Y-%m-%d'))
+    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_EXPIRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%m.%Y').strftime('%Y-%m-%d'))
+    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_REGISTRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%m.%Y').strftime('%Y-%m-%d'))
 
     
     # Reorder the columns
