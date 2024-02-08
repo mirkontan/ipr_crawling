@@ -47,10 +47,13 @@ def process_xlsx_file(xlsx_file):
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://designdb.wipo.int/designdb/en/showData.jsp?ID=CNID.{row["IPR_REGISTRATION_NUMBER"]}'
+            elif row['IPR_JURISDICTION'] == "INTERNATIONAL":
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://designdb.wipo.int/designdb/en/showData.jsp?ID=CNID.{row["IPR_REGISTRATION_NUMBER"]}'
             else:
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
             return row
-            
+
+    
     # Create 'IPR_DATABASE_URL' for trademarks based on 'IPR_JURISDICTION' and 'IPR_REGISTRATION_NUMBER'
     def create_ipr_db_url(row):
         if row['IPR_TYPE'] == 'TRADEMARK':
@@ -78,6 +81,8 @@ def process_xlsx_file(xlsx_file):
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == "INTERNATIONAL":
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             else:
                 row['IPR_DATABASE_URL'] = '-'
@@ -495,7 +500,6 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_int_rows['IPR_DESIGNATIONS'] = trademarks_df_int_rows['HTML'].apply(extract_country_codes)
 
 
-
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['HTML'].str.split(r'<img alt="').str[1]
 
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.split(r'" src="..').str[1]
@@ -508,36 +512,10 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_int_rows['IPR_REG_NAME'] = trademarks_df_int_rows['IPR_REG_NAME'].str.split(r'-').str[1]
     trademarks_df_int_rows['IPR_REG_NAME'] = trademarks_df_int_rows['IPR_REG_NAME'].str.split(r'<').str[0]
 
-    # # Find the ul element within the specified class
-    # target_ul = html.find('ul', class_='your-class')
-    # # Extract the text from all li elements within the ul
-    # elements = target_ul.find_all('li')
-
-    # trademarks_df_int_rows['IPR_CLASSEShtml'] = trademarks_df_int_rows['HTML'].str.split(r'class=""nice').str[1]
-    # trademarks_df_int_rows['IPR_CLASSEShtml'] = trademarks_df_int_rows['IPR_CLASSEShtml'].str.split(r'</div> </td> </tr> </tbody').str[0]
-
     trademarks_df_int_rows['IPR_STATUS'] = trademarks_df_int_rows['HTML'].str.split(r'status="').str[1]
     trademarks_df_int_rows['IPR_STATUS'] = trademarks_df_int_rows['IPR_STATUS'].str.split(r'">  </div> </td').str[0]
     trademarks_df_int_rows['IPR_STATUS'] = trademarks_df_int_rows['IPR_STATUS'].str.split(r'">').str[0]
-    
-    
-    # trademarks_df_cn_rows['IPR_REG_DATE'] = trademarks_df_cn_rows['HTML'].str.split(r'注册公告日期</div><div class="').str[1]
-    # trademarks_df_cn_rows['IPR_REG_DATE'] = trademarks_df_cn_rows['IPR_REG_DATE'].str.split(r'专用权期限').str[0]
-    # trademarks_df_cn_rows['IPR_REG_DATE'] = trademarks_df_cn_rows['IPR_REG_DATE'].str.split(r'">').str[1]
-    # trademarks_df_cn_rows['IPR_REG_DATE'] = trademarks_df_cn_rows['IPR_REG_DATE'].str.split(r'</div>').str[0]
 
-    # trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['HTML'].str.split(r'专用权期限</div><div class="').str[1]
-    # trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'商标类型').str[0]
-    # trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'">').str[1]
-    # trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'</div>').str[0]
-    # trademarks_df_cn_rows['IPR_EXPIRATION_DATE'] = trademarks_df_cn_rows['IPR_EXPIRATION_DATE'].str.split(r'至').str[1]
-
-    # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['HTML'].str.split(r'申请人</div><div class="').str[1]
-    # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'申请人地址</div>').str[0]
-    # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'</div>').str[0]
-    # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'">').str[1]
-
-    # st.write(trademarks_df_int_rows)
 
 
     trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows], ignore_index=True)
@@ -565,13 +543,6 @@ def process_xlsx_file(xlsx_file):
     
     # Drop the 'HTML' column
     df_combined.drop(columns=['HTML'], inplace=True)
-
-
-    # # Create 'trademarks_df' and 'nottrademarks_df'
-    # trademarks_df = df_import[df_import['IPR_TYPE'] == 'TRADEMARK']
-    # copyright_df = df_import[df_import['IPR_TYPE'] == 'COPYRIGHT']
-    # otheripr_df = df_import[df_import['IPR_TYPE'] == 'OTHER IPR']
-    # design_patents_df = df_import[df_import['IPR_TYPE'] == 'DESIGN PATENT']
     
     
     # Reorder the columns
