@@ -183,7 +183,9 @@ def process_xlsx_file(xlsx_file):
 
     
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
+    trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].fillna('-')
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
+    trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].fillna('-')
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].str.split(r'"Inhalt">').str[1]
 
     trademarks_df_eu_rows['IPR_HOLDER'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Inhaber</td>').str[1]
