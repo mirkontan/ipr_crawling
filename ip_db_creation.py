@@ -234,11 +234,6 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['IPR_REGISTRATION_DATE'].apply(convert_date_format)
 
 
-    
-    # Apply the function to the specified columns
-    trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['IPR_EXPIRATION_DATE'].apply(convert_date_format)
-    trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['IPR_REGISTRATION_DATE'].apply(convert_date_format)
-
     # st.write(trademarks_df_eu_rows)    
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
