@@ -179,7 +179,7 @@ def process_xlsx_file(xlsx_file):
        
     # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
-    st.write(trademarks_df_eu_rows)   
+    # st.write(trademarks_df_eu_rows)   
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
 
 
@@ -216,9 +216,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
     trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'Inhalt">').str[1]
 
-    
-
-    st.write(trademarks_df_eu_rows)    
+    # st.write(trademarks_df_eu_rows)    
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
     trademarks_df_indo_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "INDONESIA"]
@@ -508,7 +506,7 @@ def process_xlsx_file(xlsx_file):
     # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'</div>').str[0]
     # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'">').str[1]
 
-    # st.write(trademarks_df_int_rows)
+    st.write(trademarks_df_int_rows)
 
 
     trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows], ignore_index=True)
