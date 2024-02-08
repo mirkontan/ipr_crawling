@@ -65,7 +65,7 @@ def process_xlsx_file(xlsx_file):
             return row
             
 
-
+    df_combined = pd.DataFrame(df_combined)
     # Apply the function to create 'IPR_LINK_TO_ONLINE_DATABASE' column
     df_combined = df_import.apply(create_ipr_url, axis=1)
     
@@ -156,7 +156,7 @@ def process_xlsx_file(xlsx_file):
             return None
 
     df_combined['HTML'] = ""
-    df_combined = pd.DataFrame(df_combined)
+
 
     urlcount = 0
     for index, row in df_combined.iterrows():
