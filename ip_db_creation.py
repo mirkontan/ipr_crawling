@@ -15,6 +15,8 @@ def process_xlsx_file(xlsx_file):
     df_import = df_import.reset_index(drop=True)
     df_import['IPR_REGISTRATION_NUMBER'] = df_import['IPR'].str.split(r' - ').str[0]
     df_import['IPR_REGISTRATION_NUMBER'] = df_import['IPR_REGISTRATION_NUMBER'].str.split(r'n. ').str[1]
+    df_import['IPR_REGISTRATION_NUMBER'] = df_import['IPR_REGISTRATION_NUMBER'].str.split(r' \(').str[0]
+
 
 
     # Create 'IPR_LINK_TO_ONLINE_DATABASE' for trademarks based on 'IPR_JURISDICTION' and 'IPR_REGISTRATION_NUMBER'
