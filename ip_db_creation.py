@@ -181,13 +181,6 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     # st.write(trademarks_df_eu_rows)   
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
-
-    if trademarks_df_eu_rows['IPR_JURISDICTION'] == 'EUROPE':
-        trademarks_df_eu_rows['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#details/trademarks/{trademarks_df_eu_rows["IPR_REGISTRATION_NUMBER"]}'
-    elif trademarks_df_eu_rows['IPR_JURISDICTION'] == 'GERMANY':
-        trademarks_df_eu_rows['IPR_DATABASE_URL'] = trademarks_df_eu_rows['IPR_LINK_TO_ONLINE_DATABASE']
-
-
     
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].fillna('-')
@@ -543,6 +536,47 @@ def process_xlsx_file(xlsx_file):
     # Drop the 'HTML' column
     df_combined.drop(columns=['HTML'], inplace=True)
 
+    def create_ipr_db_url(row):
+        if row['IPR_TYPE'] == 'TRADEMARK':
+            if row['IPR_JURISDICTION'] == 'EUROPE':
+                row['IPR_DATABASE_URL'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
+            elif row['IPR_JURISDICTION'] == 'GERMANY':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
+                row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{row["IPR_NICE_CLASS"]}/{row["IPR_REGISTRATION_NUMBER"]}.html'
+            elif row['IPR_JURISDICTION'] == 'INDONESIA':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'INTERNATIONAL':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            else:
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
+            return row
+        elif row['IPR_TYPE'] == 'DESIGN PATENT':
+            if row['IPR_JURISDICTION'] == 'EUROPE':
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://euipo.europa.eu/eSearch/#basic/1+1+1+1/100+100+100+100/{row["IPR_REGISTRATION_NUMBER"]}'
+            elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
+            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
+                iprclass = row['IPR_NICE_CLASS']
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword=45059080&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
+            elif row['IPR_JURISDICTION'] == 'INDONESIA':
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.jumbomark.com/indonesia/trademark-registration/{row["IPR_REGISTRATION_NUMBER"]}'
+            else:
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
+            return row
+
+    # # Create 'trademarks_df' and 'nottrademarks_df'
+    # trademarks_df = df_import[df_import['IPR_TYPE'] == 'TRADEMARK']
+    # copyright_df = df_import[df_import['IPR_TYPE'] == 'COPYRIGHT']
+    # otheripr_df = df_import[df_import['IPR_TYPE'] == 'OTHER IPR']
+    # design_patents_df = df_import[df_import['IPR_TYPE'] == 'DESIGN PATENT']
+
+
+    # Apply the function to create 'IPR_LINK_TO_ONLINE_DATABASE' column
+    df_combined = df_import.apply(create_ipr_url, axis=1)
+    
     
     # Reorder the columns
     new_column_order = ['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
