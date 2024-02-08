@@ -538,7 +538,7 @@ def process_xlsx_file(xlsx_file):
     df_combined.drop(columns=['HTML'], inplace=True)
 
     # Reorder the columns
-    new_column_order = ['HTML', 'id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
+    new_column_order = ['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
                         'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_LINK_TO_ONLINE_DATABASE', 
                         'IPR_REGISTRATION_NUMBER', 'IPR_DESIGNATIONS', 'NOTES', 'IPR_REG_NAME2', 'IPR_REG_NAME', 
                         'IPR_STATUS', 'IPR_TYPEhtml', 'IPR_HOLDER', 'IPR_NICE_CLASSES_ALL', 'IPR_SUBCLASSES', 
