@@ -217,6 +217,22 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
     trademarks_df_eu_rows['IPR_STATUS'] = trademarks_df_eu_rows['IPR_STATUS'].str.split(r'Inhalt">').str[1]
 
+    def convert_date_format(date_str):
+        try:
+            # Parse the input date string
+            original_date = datetime.strptime(date_str, '%d.%m.%Y')
+            # Format the date in 'yyyy-mm-dd' format
+            formatted_date = original_date.strftime('%Y-%m-%d')
+            return formatted_date
+        except ValueError:
+            # If the date format is not as expected, return None or any other default value
+            return date_str  # You can modify this line to return a different default value if needed
+
+    
+    # Apply the function to the specified columns
+    trademarks_df_eu_rows['IPR_EXPIRATION_DATE'] = trademarks_df_eu_rows['IPR_EXPIRATION_DATE'].apply(convert_date_format)
+    trademarks_df_eu_rows['IPR_REGISTRATION_DATE'] = trademarks_df_eu_rows['IPR_REGISTRATION_DATE'].apply(convert_date_format)
+
     # st.write(trademarks_df_eu_rows)    
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
@@ -535,19 +551,6 @@ def process_xlsx_file(xlsx_file):
     
     # Drop the 'HTML' column
     df_combined.drop(columns=['HTML'], inplace=True)
-    from datetime import datetime
-
-    def convert_date_format(date_str):
-        # Parse the input date string
-        original_date = datetime.strptime(date_str, '%d.%m.%Y')
-        # Format the date in 'yyyy-mm-dd' format
-        formatted_date = original_date.strftime('%Y-%m-%d')
-        return formatted_date
-    
-    # Apply the function to the specified columns
-    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_EXPIRATION_DATE'].apply(convert_date_format)
-    df_combined['IPR_REGISTRATION_DATE'] = df_combined['IPR_REGISTRATION_DATE'].apply(convert_date_format)
-
 
     
     # Reorder the columns
