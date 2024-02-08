@@ -506,7 +506,7 @@ def process_xlsx_file(xlsx_file):
     # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'</div>').str[0]
     # trademarks_df_cn_rows['IPR_APPLICANT'] = trademarks_df_cn_rows['IPR_APPLICANT'].str.split(r'">').str[1]
 
-    st.write(trademarks_df_int_rows)
+    # st.write(trademarks_df_int_rows)
 
 
     trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows], ignore_index=True)
