@@ -535,9 +535,19 @@ def process_xlsx_file(xlsx_file):
     
     # Drop the 'HTML' column
     df_combined.drop(columns=['HTML'], inplace=True)
+    from datetime import datetime
+
+    def convert_date_format(date_str):
+        # Parse the input date string
+        original_date = datetime.strptime(date_str, '%d.%m.%Y')
+        # Format the date in 'yyyy-mm-dd' format
+        formatted_date = original_date.strftime('%Y-%m-%d')
+        return formatted_date
     
-    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_EXPIRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%m.%Y').strftime('%Y-%m-%d'))
-    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_REGISTRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%m.%Y').strftime('%Y-%m-%d'))
+    # Apply the function to the specified columns
+    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_EXPIRATION_DATE'].apply(convert_date_format)
+    df_combined['IPR_REGISTRATION_DATE'] = df_combined['IPR_REGISTRATION_DATE'].apply(convert_date_format)
+
 
     
     # Reorder the columns
