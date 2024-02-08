@@ -205,6 +205,7 @@ def process_xlsx_file(xlsx_file):
 
     
     trademarks_df_eu_rows['IPR_IMAGE_URL'] = trademarks_df_eu_rows['HTML'].str.split(r'<img src="').str[1]
+    trademarks_df_eu_rows['IPR_IMAGE_URL'] = trademarks_df_eu_rows['IPR_IMAGE_URL'].fillna('-')
     trademarks_df_eu_rows['IPR_IMAGE_URL'] = trademarks_df_eu_rows['IPR_IMAGE_URL'].str.split(r'" alt="').str[0]
     
     trademarks_df_eu_rows['IPR_NICE_CLASSES_ALL'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Anmeldetag</td>').str[1]
