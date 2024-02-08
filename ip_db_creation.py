@@ -535,7 +535,11 @@ def process_xlsx_file(xlsx_file):
     
     # Drop the 'HTML' column
     df_combined.drop(columns=['HTML'], inplace=True)
+    
+    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_EXPIRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%b.%Y').strftime('%Y-%m-%d'))
+    df_combined['IPR_EXPIRATION_DATE'] = df_combined['IPR_REGISTRATION_DATE'].apply(lambda x: datetime.strptime(x, '%d.%b.%Y').strftime('%Y-%m-%d'))
 
+    
     # Reorder the columns
     new_column_order = ['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
                         'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_LINK_TO_ONLINE_DATABASE', 
