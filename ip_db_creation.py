@@ -19,7 +19,6 @@ def process_xlsx_file(xlsx_file):
     df_import['IPR_DATABASE_URL'] = '-'
 
 
-
     # Create 'IPR_LINK_TO_ONLINE_DATABASE' for trademarks based on 'IPR_JURISDICTION' and 'IPR_REGISTRATION_NUMBER'
     def create_ipr_url(row):
         if row['IPR_TYPE'] == 'TRADEMARK':
@@ -29,28 +28,24 @@ def process_xlsx_file(xlsx_file):
             elif row['IPR_JURISDICTION'] == 'GERMANY':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-                
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']         
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 iprclass = row['IPR_NICE_CLASS']
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword={row["IPR_REGISTRATION_NUMBER"]}&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
                 row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
-                
+             
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.jumbomark.com/indonesia/trademark-registration/{row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-      
+   
             elif row['IPR_JURISDICTION'] == 'INTERNATIONAL':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = r'https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.' + row["IPR_REGISTRATION_NUMBER"]
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-
             else:
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
-            return row
-        
+            return row        
         elif row['IPR_TYPE'] == 'DESIGN PATENT':
             if row['IPR_JURISDICTION'] == 'EUROPE':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/gsm/registerhabm?DNR={row["IPR_REGISTRATION_NUMBER"]}'
@@ -58,33 +53,24 @@ def process_xlsx_file(xlsx_file):
             elif row['IPR_JURISDICTION'] == 'GERMANY':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/gsm/register?DNR={row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-              
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://designdb.wipo.int/designdb/en/showData.jsp?ID=CNID.{row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             else:
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
                 row['IPR_DATABASE_URL'] = '-'
-
             return row
-
-
-    
-    # # Create 'trademarks_df' and 'nottrademarks_df'
-    # trademarks_df = df_import[df_import['IPR_TYPE'] == 'TRADEMARK']
-    # copyright_df = df_import[df_import['IPR_TYPE'] == 'COPYRIGHT']
-    # otheripr_df = df_import[df_import['IPR_TYPE'] == 'OTHER IPR']
-    # design_patents_df = df_import[df_import['IPR_TYPE'] == 'DESIGN PATENT']
+            
 
 
     # Apply the function to create 'IPR_LINK_TO_ONLINE_DATABASE' column
     df_combined = df_import.apply(create_ipr_url, axis=1)
+    
     # st.write('DF IPR_LINK_TO_ONLINE_DATABASE GENERATOR')
-    # st.write(df_combined)
+    st.write(df_combined)
  
     # Function to fetch HTML content and extract a specific section
     def cn_extract_section_from_url(url):
@@ -170,7 +156,8 @@ def process_xlsx_file(xlsx_file):
             return None
 
     df_combined['HTML'] = ""
-    
+    df_combined = pd.DataFrame(df_combined)
+
     urlcount = 0
     for index, row in df_combined.iterrows():
         url = row['IPR_LINK_TO_ONLINE_DATABASE']
