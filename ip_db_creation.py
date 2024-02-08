@@ -178,9 +178,14 @@ def process_xlsx_file(xlsx_file):
 
        
     # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
-    trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "EUROPE"]
+    trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     # st.write(trademarks_df_eu_rows)   
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
+
+    if trademarks_df_eu_rows['IPR_JURISDICTION'] == 'EUROPE':
+        trademarks_df_eu_rows['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#details/trademarks/{trademarks_df_eu_rows["IPR_REGISTRATION_NUMBER"]}'
+    elif trademarks_df_eu_rows['IPR_JURISDICTION'] == 'GERMANY':
+        trademarks_df_eu_rows['IPR_DATABASE_URL'] = trademarks_df_eu_rows['IPR_LINK_TO_ONLINE_DATABASE']
 
 
     
@@ -541,10 +546,10 @@ def process_xlsx_file(xlsx_file):
     
     # Reorder the columns
     new_column_order = ['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
-                        'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_LINK_TO_ONLINE_DATABASE', 
+                        'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_DATABASE_URL', 
                         'IPR_REGISTRATION_NUMBER', 'IPR_DESIGNATIONS', 'NOTES', 'IPR_REG_NAME2', 'IPR_REG_NAME', 
                         'IPR_STATUS', 'IPR_TYPEhtml', 'IPR_HOLDER', 'IPR_NICE_CLASSES_ALL', 'IPR_SUBCLASSES', 
-                        'IPR_SUBCLASSESdetails']
+                        'IPR_SUBCLASSESdetails', 'IPR_LINK_TO_ONLINE_DATABASE']
 
     df_combined = df_combined.reindex(columns=new_column_order)
 
