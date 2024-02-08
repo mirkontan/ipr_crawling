@@ -576,7 +576,7 @@ def process_xlsx_file(xlsx_file):
 
 
     # Apply the function to create 'IPR_LINK_TO_ONLINE_DATABASE' column
-    df_combined = df_import.apply(create_ipr_url, axis=1)
+    df_combined = df_combined.apply(create_ipr_db_url, axis=1)
     
     
     # Reorder the columns
