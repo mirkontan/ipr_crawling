@@ -24,48 +24,65 @@ def process_xlsx_file(xlsx_file):
         if row['IPR_TYPE'] == 'TRADEMARK':
             if row['IPR_JURISDICTION'] == 'EUROPE':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
-                row['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#details/trademarks/{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'GERMANY':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']         
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 iprclass = row['IPR_NICE_CLASS']
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword={row["IPR_REGISTRATION_NUMBER"]}&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
-                row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
-             
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.jumbomark.com/indonesia/trademark-registration/{row["IPR_REGISTRATION_NUMBER"]}'
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
-   
             elif row['IPR_JURISDICTION'] == 'INTERNATIONAL':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = r'https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.' + row["IPR_REGISTRATION_NUMBER"]
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             else:
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
             return row        
         elif row['IPR_TYPE'] == 'DESIGN PATENT':
             if row['IPR_JURISDICTION'] == 'EUROPE':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/gsm/registerhabm?DNR={row["IPR_REGISTRATION_NUMBER"]}'
-                row['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#basic/1+1+1+1/100+100+100+100/{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'GERMANY':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/gsm/register?DNR={row["IPR_REGISTRATION_NUMBER"]}'
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
-                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://designdb.wipo.int/designdb/en/showData.jsp?ID=CNID.{row["IPR_REGISTRATION_NUMBER"]}'
+            else:
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
+            return row
+            
+    # Create 'IPR_DATABASE_URL' for trademarks based on 'IPR_JURISDICTION' and 'IPR_REGISTRATION_NUMBER'
+    def create_ipr_db_url(row):
+        if row['IPR_TYPE'] == 'TRADEMARK':
+            if row['IPR_JURISDICTION'] == 'EUROPE':
+                row['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#details/trademarks/{row["IPR_REGISTRATION_NUMBER"]}'
+            elif row['IPR_JURISDICTION'] == 'GERMANY':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']         
+            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
+                iprclass = row['IPR_NICE_CLASS']
+                row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
+            elif row['IPR_JURISDICTION'] == 'INDONESIA':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']  
+            elif row['IPR_JURISDICTION'] == 'INTERNATIONAL':
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             else:
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
+            return row        
+        elif row['IPR_TYPE'] == 'DESIGN PATENT':
+            if row['IPR_JURISDICTION'] == 'EUROPE':
+                row['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#basic/1+1+1+1/100+100+100+100/{row["IPR_REGISTRATION_NUMBER"]}'
+            elif row['IPR_JURISDICTION'] == 'GERMANY':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA':
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA" or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            else:
                 row['IPR_DATABASE_URL'] = '-'
             return row
             
-
-    df_combined = pd.DataFrame(df_combined)
     # Apply the function to create 'IPR_LINK_TO_ONLINE_DATABASE' column
     df_combined = df_import.apply(create_ipr_url, axis=1)
     
