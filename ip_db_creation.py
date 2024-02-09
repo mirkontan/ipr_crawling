@@ -503,6 +503,7 @@ def process_xlsx_file(xlsx_file):
 
 
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['HTML'].str.split(r'<img alt="').str[1]
+    trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].fillna('-')
 
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.split(r'" src="..').str[1]
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.split(r'" style').str[0]
