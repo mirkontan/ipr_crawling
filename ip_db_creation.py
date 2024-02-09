@@ -504,13 +504,15 @@ def process_xlsx_file(xlsx_file):
     # Apply the function to extract country codes and populate 'IPR_DESIGNATIONS' column
     trademarks_df_int_rows['IPR_DESIGNATIONS'] = trademarks_df_int_rows['HTML'].apply(extract_country_codes)
 
-
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['HTML'].str.split(r'<img alt="').str[1]
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].fillna('-')
 
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.split(r'" src="..').str[1]
+    trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].fillna('-')
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.split(r'" style').str[0]
+    trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].fillna('-')
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.replace(r'/jsp/', 'https://www3.wipo.int/madrid/monitor/jsp/', regex=False)
+    trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].fillna('-')
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['IPR_IMAGE_URL'].str.replace(r'amp;', '', regex=False)
 
     trademarks_df_int_rows['IPR_REG_NAME'] = trademarks_df_int_rows['HTML'].str.split(r'markname"').str[1]
