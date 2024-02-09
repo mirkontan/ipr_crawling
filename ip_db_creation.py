@@ -213,8 +213,11 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_eu_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     st.write(design_patents_df_eu_rows)   
 
+    # Filter rows where 'IPR_JURISDICTION' contains 'UNITED STATES'
+    trademarks_df_us_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['UNITED STATES', 'UNITED STATES OF AMERICA'])]
+    st.write(trademarks_df_us_rows)
        
-    # Filter rows where 'IPR_JURISDICTION' is equal to 'EUROPE'
+    # Filter rows where 'IPR_JURISDICTION' contains 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     # st.write(trademarks_df_eu_rows)   
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
@@ -521,7 +524,7 @@ def process_xlsx_file(xlsx_file):
 
 
 
-    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows], ignore_index=True)
+    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_us_rows], ignore_index=True)
     # st.write(trademarks_df)
 
     # Re-concatenate the DataFrames to create df_combined
