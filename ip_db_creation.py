@@ -6,6 +6,8 @@ import re
 from extract_data_html import extract_data_int
 from create_download_link import create_download_link
 
+parseable_jurisdicitons = []
+
 # Function to process the uploaded XLSX file
 def process_xlsx_file(xlsx_file):
     df_import = pd.read_excel(xlsx_file, usecols=['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_JURISDICTION', 'IPR_NICE_CLASS', 'NOTES'])  # Read only selected columns
@@ -19,7 +21,6 @@ def process_xlsx_file(xlsx_file):
     df_import['IPR_DATABASE_URL'] = '-'
 
     
-    parseable_jurisdicitons = []
 
     # Create 'IPR_LINK_TO_ONLINE_DATABASE' for trademarks based on 'IPR_JURISDICTION' and 'IPR_REGISTRATION_NUMBER'
     def create_ipr_url(row):
