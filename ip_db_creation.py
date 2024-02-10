@@ -232,7 +232,7 @@ def process_xlsx_file(xlsx_file):
     invention_patents_df = df_combined[df_combined['IPR_TYPE'] == 'INVENTION PATENT']
 
     # Filter out rows with 'EUROPE', 'INTERNATIONAL', 'UNITED STATES', or 'CHINA' in the 'IPR_JURISDICTION' field
-    all_others_iprs_rows = combined_df[~combined_df['IPR_JURISDICTION'].isin(['EUROPE', 'INTERNATIONAL', 'UNITED STATES', 'CHINA', 'GERMANY', 'INDONESIA'])]
+    all_others_iprs_rows = df_combined[~df_combined['IPR_JURISDICTION'].isin(['EUROPE', 'INTERNATIONAL', 'UNITED STATES', 'CHINA', 'GERMANY', 'INDONESIA'])]
     st.write('ALL OTHER IPR')
     st.write(all_others_iprs_rows)
     design_patents_df_eu_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
