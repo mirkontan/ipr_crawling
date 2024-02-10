@@ -112,7 +112,7 @@ def process_xlsx_file(xlsx_file):
     parseable_jurisdictions = set(parseable_jurisdictions)
     # Convert the set back to a list if needed
     parseable_jurisdictions = list(parseable_jurisdictions)
-
+    st.write('PARSEABLE JURISDICTIONS)
     st.write(parseable_jurisdictions)
  
     # Function to fetch HTML content and extract a specific section
