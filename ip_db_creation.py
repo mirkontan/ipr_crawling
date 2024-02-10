@@ -6,7 +6,7 @@ import re
 from extract_data_html import extract_data_int
 from create_download_link import create_download_link
 
-parseable_jurisdicitons = []
+parseable_tm_jurisdictions = []
 
 # Function to process the uploaded XLSX file
 def process_xlsx_file(xlsx_file):
@@ -27,45 +27,45 @@ def process_xlsx_file(xlsx_file):
         if row['IPR_TYPE'] == 'TRADEMARK':
             if row['IPR_JURISDICTION'] == 'EUROPE':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = f'https://euipo.europa.eu/eSearch/#details/trademarks/{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'GERMANY':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'UNITED KINGDOM':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 # Remove 'UK' from iprregnum if present
                 iprregnum = iprregnum.replace('UK', '')
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://trademark-search.marcaria.com/en/result?number={iprregnum}&country=GB&classes=&status=1&mode=1&searchby=2'
                 row['IPR_DATABASE_URL'] = f'https://www.ipo.gov.uk/tmcase/Results/1/{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'UNITED STATES OF AMERICA' or row['IPR_JURISDICTION'] == 'UNITED STATES':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/quicksearch/brand/US5020060{row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = f'https://tsdr.uspto.gov/#caseNumber={row["IPR_REGISTRATION_NUMBER"]}&caseSearchType=US_APPLICATION&caseType=SERIAL_NO&searchType=statusSearch'
             elif row['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA"  or row['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA":
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 iprclass = row['IPR_NICE_CLASS']
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword={row["IPR_REGISTRATION_NUMBER"]}&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
                 row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.jumbomark.com/indonesia/trademark-registration/{row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = f'https://branddb.wipo.int/en/quicksearch/brand/US5020060{row["IPR_REGISTRATION_NUMBER"]}'
             elif row['IPR_JURISDICTION'] == 'MALAYSIA':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/quicksearch/brand/MY5019{row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']  
             elif row['IPR_JURISDICTION'] == 'PHILIPPINES':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 iprregnum = row['IPR_REGISTRATION_NUMBER']
                 # Split the iprregnum string by '-' and get the last part
                 iprregnum_parts = iprregnum.split('-')
@@ -76,12 +76,13 @@ def process_xlsx_file(xlsx_file):
 
             elif row['IPR_JURISDICTION'] == 'INTERNATIONAL':
                 jurisdiction = row['IPR_JURISDICTION']
-                parseable_jurisdictions.append(jurisdiction)
+                parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = r'https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.' + row["IPR_REGISTRATION_NUMBER"]
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']  
             else:
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = None  # Handle other jurisdictions if needed
             return row        
+            
         elif row['IPR_TYPE'] == 'DESIGN PATENT':
             if row['IPR_JURISDICTION'] == 'EUROPE':
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/gsm/registerhabm?DNR={row["IPR_REGISTRATION_NUMBER"]}'
@@ -109,12 +110,12 @@ def process_xlsx_file(xlsx_file):
     # st.write('DF IPR_LINK_TO_ONLINE_DATABASE GENERATOR')
     st.write(df_combined)
     
-    # Convert parseable_jurisdictions to a set to remove duplicates
-    parseable_jurisdictions = set(parseable_jurisdictions)
+    # Convert parseable_tm_jurisdictions to a set to remove duplicates
+    parseable_tm_jurisdictions = set(parseable_tm_jurisdictions)
     # Convert the set back to a list if needed
-    parseable_jurisdictions = list(parseable_jurisdictions)
+    parseable_tm_jurisdictions = list(parseable_tm_jurisdictions)
     st.write('PARSEABLE JURISDICTIONS)
-    st.write(parseable_jurisdictions)
+    st.write(parseable_tm_jurisdictions)
  
     # Function to fetch HTML content and extract a specific section
     def cn_extract_section_from_url(url):
@@ -235,7 +236,7 @@ def process_xlsx_file(xlsx_file):
     invention_patents_df = df_combined[df_combined['IPR_TYPE'] == 'INVENTION PATENT']    
     
     # Filter df_combined based on the list of exclude_values
-    all_others_iprs_rows = df_combined[~df_combined['IPR_JURISDICTION'].isin(parseable_jurisdicitons)]
+    all_others_iprs_rows = df_combined[~df_combined['IPR_JURISDICTION'].isin(parseable_tm_jurisdictions)]
     st.write('ALL OTHER IPR')
     st.write(all_others_iprs_rows)
     
