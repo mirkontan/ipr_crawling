@@ -57,6 +57,10 @@ def process_xlsx_file(xlsx_file):
                 iprclass = row['IPR_NICE_CLASS']
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://cloud.baidu.com/product/tms/detail?keyword={row["IPR_REGISTRATION_NUMBER"]}&keywordType=registrationNumber&registrationNumber={row["IPR_REGISTRATION_NUMBER"]}&firstCode={iprclass}'
                 row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
+            elif row['IPR_JURISDICTION'] == "JAPAN":
+                parseable_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2278be%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2278bf%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22JP%22,%22label%22:%22(JP)%20JPO%22,%22score%22:194,%22highlighted%22:%22(%3Cem%3EJP%3C%2Fem%3E)%20%3Cem%3EJP%3C%2Fem%3EO%22%7D%5D%7D,%7B%22_id%22:%2278c0%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707743403159'
+                row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
                 parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.jumbomark.com/indonesia/trademark-registration/{row["IPR_REGISTRATION_NUMBER"]}'
@@ -274,6 +278,7 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_cn_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].str.contains('CHINA')]
     trademarks_df_kr_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA'])]
     trademarks_df_it_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['ITALY'])]
+    trademarks_df_jp_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['JAPAN'])]
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
 
     design_patents_df_eu_rows['IPR_REG_NAME'] = design_patents_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
@@ -625,7 +630,7 @@ def process_xlsx_file(xlsx_file):
 
 
 
-    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_kr_rows, trademarks_df_it_rows, trademarks_df_us_rows], ignore_index=True)
+    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_kr_rows, trademarks_df_jp_rows, trademarks_df_it_rows, trademarks_df_us_rows], ignore_index=True)
     # st.write(trademarks_df)
     design_patents_df = pd.concat([design_patents_df_eu_rows, design_patents_df_us_rows, design_patents_df_cn_rows, design_patents_df_int_rows], ignore_index=True)
     # st.write(trademarks_df)
