@@ -379,8 +379,8 @@ def process_xlsx_file(xlsx_file):
 
     from datetime import datetime
     # Convert the dates in the column to a more standard date format
-    trademarks_df_indo_rows['IPR_EXPIRATION_DATE'] = trademarks_df_indo_rows['IPR_EXPIRATION_DATE'].apply(lambda x: datetime.strptime(x, '%a, %d %b %Y').strftime('%Y-%m-%d'))
-    trademarks_df_indo_rows['IPR_REGISTRATION_DATE'] = trademarks_df_indo_rows['IPR_REGISTRATION_DATE'].apply(lambda x: datetime.strptime(x, '%a, %d %b %Y').strftime('%Y-%m-%d'))
+    # trademarks_df_indo_rows['IPR_EXPIRATION_DATE'] = trademarks_df_indo_rows['IPR_EXPIRATION_DATE'].apply(lambda x: datetime.strptime(x, '%a, %d %b %Y').strftime('%Y-%m-%d'))
+    # trademarks_df_indo_rows['IPR_REGISTRATION_DATE'] = trademarks_df_indo_rows['IPR_REGISTRATION_DATE'].apply(lambda x: datetime.strptime(x, '%a, %d %b %Y').strftime('%Y-%m-%d'))
     
     trademarks_df_indo_rows['IPR_IMAGE_URL'] = trademarks_df_indo_rows['HTML'].str.split(r'itemprop="image" content="').str[1]
     trademarks_df_indo_rows['IPR_IMAGE_URL'] = trademarks_df_indo_rows['IPR_IMAGE_URL'].str.split(r'">').str[0]
