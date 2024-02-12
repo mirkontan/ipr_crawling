@@ -60,7 +60,7 @@ def process_xlsx_file(xlsx_file):
             elif row['IPR_JURISDICTION'] == "JAPAN":
                 parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2278be%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2278bf%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22JP%22,%22label%22:%22(JP)%20JPO%22,%22score%22:194,%22highlighted%22:%22(%3Cem%3EJP%3C%2Fem%3E)%20%3Cem%3EJP%3C%2Fem%3EO%22%7D%5D%7D,%7B%22_id%22:%2278c0%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707743403159'
-                row['IPR_DATABASE_URL'] = f'https://www.chinatrademarkoffice.com/search/tmdetails/{iprclass}/{row["IPR_REGISTRATION_NUMBER"]}.html'
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'INDONESIA':
                 parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.jumbomark.com/indonesia/trademark-registration/{row["IPR_REGISTRATION_NUMBER"]}'
