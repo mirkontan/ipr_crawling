@@ -527,10 +527,7 @@ def process_xlsx_file(xlsx_file):
     # Iterate through the URLs and extract data
     for index, row in trademarks_df_int_rows.iterrows():
         url = row['IPR_LINK_TO_ONLINE_DATABASE']
-        # st.write('URLS DA PARSARE:')
-        # st.write(url)
         df_data = extract_data_int(url)
-        # st.write(df_data)
         if df_data is not None:
             # Assuming the extracted data is a DataFrame with one row
             for column in df_data.columns:
@@ -617,7 +614,7 @@ def process_xlsx_file(xlsx_file):
 
     
 
-    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_other_rows, trademarks_df_us_rows], ignore_index=True)
+    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_us_rows], ignore_index=True)
     # st.write(trademarks_df)
     design_patents_df = pd.concat([design_patents_df_eu_rows, design_patents_df_us_rows, design_patents_df_cn_rows, design_patents_df_int_rows], ignore_index=True)
     # st.write(trademarks_df)
