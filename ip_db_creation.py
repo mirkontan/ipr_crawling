@@ -22,7 +22,9 @@ def process_xlsx_file(xlsx_file):
     df_import['IPR_DATABASE_URL'] = '-'
 
     parseable_tm_jurisdictions = []
+    parsed_tm_jurisdictions = []
     parseable_design_jurisdictions = []
+    parsed_designs_jurisdictions = []
     
 
     # Create 'IPR_LINK_TO_ONLINE_DATABASE' for trademarks based on 'IPR_JURISDICTION' and 'IPR_REGISTRATION_NUMBER'
@@ -273,6 +275,9 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_cn_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].str.contains('CHINA')]
     trademarks_df_other_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA', 'ITALY', 'JAPAN'])]
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
+   
+    parsed_designs_jurisdictions.append(design_patents_df_eu_rows['IPR_JURISDICTION'])
+    st.write(parsed_designs_jurisdictions)
 
     design_patents_df_eu_rows['IPR_REG_NAME'] = design_patents_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
     design_patents_df_eu_rows['IPR_REG_NAME'] = design_patents_df_eu_rows['IPR_REG_NAME'].fillna('-')
@@ -312,13 +317,13 @@ def process_xlsx_file(xlsx_file):
 
     # Filter rows where 'IPR_JURISDICTION' contains 'UNITED STATES'
     trademarks_df_us_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].str.contains('UNITED STATES')]
-    st.write('TM US')
-    st.write(trademarks_df_us_rows)
+    
     # Filter rows where 'IPR_JURISDICTION' contains 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     # st.write(trademarks_df_eu_rows)   
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
-    
+    parsed_tm_jurisdictions.append(trademarks_df[trademarks_df['IPR_JURISDICTION'])
+    st.write(parsed_tm_jurisdictions)
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].fillna('-')
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
