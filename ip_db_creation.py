@@ -277,10 +277,9 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
    
     parsed_designs_jurisdictions.append(design_patents_df_eu_rows['IPR_JURISDICTION'])
-    # Convert parseable_tm_jurisdictions to a set to remove duplicates
+    parsed_designs_jurisdictions = list(parsed_designs_jurisdictions)
     parsed_designs_jurisdictions = set(parsed_designs_jurisdictions)
     # Convert the set back to a list if needed
-    parsed_designs_jurisdictions = list(parsed_designs_jurisdictions)
     st.write(parsed_designs_jurisdictions)
     
     design_patents_df_eu_rows['IPR_REG_NAME'] = design_patents_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
