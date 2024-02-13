@@ -273,7 +273,6 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_eu_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     design_patents_df_us_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].str.contains('UNITED STATES')]
     design_patents_df_cn_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].str.contains('CHINA')]
-    trademarks_df_other_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA', 'ITALY', 'JAPAN'])]
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
    
     parsed_designs_jurisdictions.append(design_patents_df_eu_rows['IPR_JURISDICTION'])
@@ -324,8 +323,6 @@ def process_xlsx_file(xlsx_file):
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
     
     parsed_tm_jurisdictions.append(trademarks_df_eu_rows['IPR_JURISDICTION'])
-    parsed_tm_jurisdictions = list(parsed_tm_jurisdictions)
-    st.write(parsed_tm_jurisdictions)
     
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].fillna('-')
@@ -366,6 +363,8 @@ def process_xlsx_file(xlsx_file):
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
     trademarks_df_indo_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "INDONESIA"]
+    parsed_tm_jurisdictions.append(trademarks_df_indo_rows['IPR_JURISDICTION'])
+
     trademarks_df_indo_rows['IPR_HOLDER'] = trademarks_df_indo_rows['HTML'].str.split(r'<dt class="col-lg-3 col-md-4">Applicant</dt>').str[1]
     trademarks_df_indo_rows['IPR_HOLDER'] = trademarks_df_indo_rows['IPR_HOLDER'].str.split(r'</dd>').str[0]
     trademarks_df_indo_rows['IPR_HOLDER'] = trademarks_df_indo_rows['IPR_HOLDER'].str.split(r'>').str[1]
@@ -410,7 +409,8 @@ def process_xlsx_file(xlsx_file):
 
     # Filter rows where 'IPR_JURISDICTION' is equal to 'PEOPLE'S REPUBLIC OF CHINA'
     trademarks_df_cn_rows = trademarks_df[(trademarks_df['IPR_JURISDICTION'] == "PEOPLE'S REPUBLIC OF CHINA") | (trademarks_df['IPR_JURISDICTION'] == "PEOPLE`S REPUBLIC OF CHINA")]
-
+    parsed_tm_jurisdictions.append(trademarks_df_cn_rows['IPR_JURISDICTION'])
+             
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['HTML'].str.split(r'<img class=').str[1]
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].fillna("-")
     trademarks_df_cn_rows['IPR_IMAGE_URL'] = trademarks_df_cn_rows['IPR_IMAGE_URL'].str.split(r'" src="').str[1]
@@ -595,7 +595,7 @@ def process_xlsx_file(xlsx_file):
 
     # Apply the function to extract img src from HTML column
     trademarks_df_int_rows['IPR_IMAGE_URL'] = trademarks_df_int_rows['HTML'].apply(extract_img_src_from_html)
-
+    parsed_tm_jurisdictions.append(trademarks_df_int_rows['IPR_JURISDICTION'])
 
     # Rename columns
     trademarks_df_int_rows = trademarks_df_int_rows.rename(columns={'Trademark': 'IPR_REG_NAME2',
@@ -630,6 +630,13 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_int_rows['IPR_STATUS'] = trademarks_df_int_rows['IPR_STATUS'].str.split(r'">').str[0]
 
 
+    parsed_tm_jurisdictions = list(parsed_tm_jurisdictions)
+    st.write(parsed_tm_jurisdictions)
+    not_parsed_tm_jurisdictions = parseable_tm_jurisdictions - parsed_tm_jurisdictions
+    not_parsed_tm_jurisdictions = [jurisdiction for jurisdiction in parseable_tm_jurisdictions if jurisdiction not in parsed_tm_jurisdictions]
+    st.write(not_parsed_tm_jurisdictions)
+    
+    trademarks_df_other_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA', 'ITALY', 'JAPAN'])]
 
     trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_other_rows, trademarks_df_us_rows], ignore_index=True)
     # st.write(trademarks_df)
