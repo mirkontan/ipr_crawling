@@ -194,22 +194,6 @@ def process_xlsx_file(xlsx_file):
         except requests.exceptions.RequestException as e:
             return f"An error occurred: {e}"
 
-
-    def indo_extract_section_from_url(url):
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.text, 'html.parser')
-                section = soup.find('div', {'class': 'fragment box_content'})
-                if section:
-                    return str(section)  # Return the HTML content as a string
-                else:
-                    return "Section not found on the page."
-            else:
-                return f"Failed to fetch HTML content from {url}"
-        except requests.exceptions.RequestException as e:
-            return f"An error occurred: {e}"
-
     
     # Function to fetch HTML content and extract a specific section
     def eu_extract_section_from_url(url):
@@ -246,7 +230,7 @@ def process_xlsx_file(xlsx_file):
             elif 'INTERNATIONAL' in jurisdiction:
                 html_content = int_extract_section_from_url(url)
             elif 'INDONESIA' in jurisdiction:
-                html_content = indo_extract_section_from_url(url)
+                html_content = fetch_html_content(url, timeout=200)            
             elif 'EUROPE' in jurisdiction:
                 html_content = fetch_html_content(url, timeout=200)            
             elif 'GERMANY' in jurisdiction:
