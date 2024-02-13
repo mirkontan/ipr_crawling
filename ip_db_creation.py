@@ -629,8 +629,8 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_int_rows['IPR_STATUS'] = trademarks_df_int_rows['IPR_STATUS'].str.split(r'">  </div> </td').str[0]
     trademarks_df_int_rows['IPR_STATUS'] = trademarks_df_int_rows['IPR_STATUS'].str.split(r'">').str[0]
 
-    st.write(type(parseable_tm_jurisdictions)
-    st.write(type(parsed_tm_jurisdictions)
+    parseable_tm_jurisdictions = list(parseable_tm_jurisdictions)
+    parsed_tm_jurisdictions = list(parsed_tm_jurisdictions)
 
     parsed_tm_jurisdictions = list(parsed_tm_jurisdictions)
     st.write(parsed_tm_jurisdictions)
