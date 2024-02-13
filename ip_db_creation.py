@@ -324,9 +324,6 @@ def process_xlsx_file(xlsx_file):
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
     
     parsed_tm_jurisdictions.append(trademarks_df_eu_rows['IPR_JURISDICTION'])
-    # Convert parseable_tm_jurisdictions to a set to remove duplicates
-    parsed_tm_jurisdictions = set(parsed_tm_jurisdictions)
-    # Convert the set back to a list if needed
     parsed_tm_jurisdictions = list(parsed_tm_jurisdictions)
     st.write(parsed_tm_jurisdictions)
     
