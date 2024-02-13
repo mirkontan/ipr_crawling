@@ -632,7 +632,6 @@ def process_xlsx_file(xlsx_file):
 
     parsed_tm_jurisdictions = list(parsed_tm_jurisdictions)
     st.write(parsed_tm_jurisdictions)
-    not_parsed_tm_jurisdictions = parseable_tm_jurisdictions - parsed_tm_jurisdictions
     not_parsed_tm_jurisdictions = [jurisdiction for jurisdiction in parseable_tm_jurisdictions if jurisdiction not in parsed_tm_jurisdictions]
     st.write(not_parsed_tm_jurisdictions)
     
