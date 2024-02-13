@@ -83,6 +83,42 @@ def process_xlsx_file(xlsx_file):
                 not_parsed_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%22d36b%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%22d36e%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22KR%22,%22label%22:%22(KR)%20KIPO%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EKR%3C%2Fem%3E)%20KIPO%22%7D%5D%7D,%7B%22_id%22:%22d36f%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&_=1707582032071&fg=_void_'            
                 row['IPR_DATABASE_URL'] = f'http://engdtj.kipris.or.kr/engdtj/grrt1000a.do?method=biblioTMFrame&masterKey={iprregnum}&index=0&kindOfReq=R&valid_fg='
+            elif row['IPR_JURISDICTION'] == 'AUSTRALIA':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22AU%22,%22label%22:%22(AU)%20IPA%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EAU%3C%2Fem%3E)%20IPA%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&_=1707838876623&fg=_void_'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'INDIA':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22IN%22,%22label%22:%22(IN)%20CGDPTM%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EIN%3C%2Fem%3E)%20CGDPTM%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707838998374'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'NEW ZEALAND':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22NZ%22,%22label%22:%22(NZ)%20IPONZ%22,%22score%22:191,%22highlighted%22:%22(%3Cem%3ENZ%3C%2Fem%3E)%20IPO%3Cem%3ENZ%3C%2Fem%3E%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839070272'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'SINGAPORE':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22SG%22,%22label%22:%22(SG)%20IPOS%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3ESG%3C%2Fem%3E)%20IPOS%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839110407'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'BRAZIL':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22BR%22,%22label%22:%22(BR)%20INPI%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EBR%3C%2Fem%3E)%20INPI%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839209172'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'MEXICO':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22MX%22,%22label%22:%22(MX)%20IMPI%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EMX%3C%2Fem%3E)%20IMPI%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839288899'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'THAILAND':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22TH%22,%22label%22:%22(TH)%20DIP%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3ETH%3C%2Fem%3E)%20DIP%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839400499'            
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'URUGUAY':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22UY%22,%22label%22:%22(UY)%20MIEM-DNPI%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EUY%3C%2Fem%3E)%20MIEM-DNPI%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839443642'       
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'VIETNAM':
+                not_parsed_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/advancedsearch/results?sort=score%20desc&strategy=concept&rows=30&asStructure=%7B%22_id%22:%2270d0%22,%22boolean%22:%22AND%22,%22bricks%22:%5B%7B%22_id%22:%2270d1%22,%22key%22:%22office%22,%22strategy%22:%22any_of%22,%22value%22:%5B%7B%22value%22:%22VN%22,%22label%22:%22(VN)%20IP%20VIET%20NAM%22,%22score%22:99,%22highlighted%22:%22(%3Cem%3EVN%3C%2Fem%3E)%20IP%20VIET%20NAM%22%7D%5D%7D,%7B%22_id%22:%2270d2%22,%22key%22:%22regNum%22,%22value%22:%22{iprregnum}%22%7D%5D%7D&fg=_void_&_=1707839547809'       
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'INTERNATIONAL':
                 parsed_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = r'https://www3.wipo.int/madrid/monitor/en/showData.jsp?ID=ROM.' + row["IPR_REGISTRATION_NUMBER"]
