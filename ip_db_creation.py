@@ -365,9 +365,10 @@ def process_xlsx_file(xlsx_file):
 
 
     # st.write(trademarks_df_eu_rows)    
-
+    
     # Filter rows where 'IPR_JURISDICTION' is equal to 'INDONESIA'
     trademarks_df_indo_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'] == "INDONESIA"]
+    st.write(trademarks_df_indo_rows)
     trademarks_df_indo_rows['IPR_HOLDER'] = trademarks_df_indo_rows['HTML'].str.split(r'<dt class="col-lg-3 col-md-4">Applicant</dt>').str[1]
     trademarks_df_indo_rows['IPR_HOLDER'] = trademarks_df_indo_rows['IPR_HOLDER'].str.split(r'</dd>').str[0]
     trademarks_df_indo_rows['IPR_HOLDER'] = trademarks_df_indo_rows['IPR_HOLDER'].str.split(r'>').str[1]
