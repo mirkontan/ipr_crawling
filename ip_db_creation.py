@@ -635,7 +635,7 @@ def process_xlsx_file(xlsx_file):
     not_parsed_tm_jurisdictions = [jurisdiction for jurisdiction in parseable_tm_jurisdictions if jurisdiction not in parsed_tm_jurisdictions]
     st.write(not_parsed_tm_jurisdictions)
     
-    trademarks_df_other_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA', 'ITALY', 'JAPAN'])]
+    trademarks_df_other_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(not_parsed_tm_jurisdictions)]
 
     trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_other_rows, trademarks_df_us_rows], ignore_index=True)
     # st.write(trademarks_df)
