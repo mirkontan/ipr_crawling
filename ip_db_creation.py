@@ -275,10 +275,7 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_eu_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     design_patents_df_us_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].str.contains('UNITED STATES')]
     design_patents_df_cn_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].str.contains('CHINA')]
-    trademarks_df_kr_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA'])]
-    trademarks_df_it_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['ITALY'])]
-    trademarks_df_jp_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['JAPAN'])]
-    trademarks_df_co_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['COLOMBIA'])]
+    trademarks_df_other_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA', 'ITALY', 'JAPAN', 'COLOMBIA'])]
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
 
     design_patents_df_eu_rows['IPR_REG_NAME'] = design_patents_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
@@ -630,7 +627,7 @@ def process_xlsx_file(xlsx_file):
 
 
 
-    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_kr_rows, trademarks_df_jp_rows, trademarks_df_it_rows, trademarks_df_us_rows, trademarks_df_co_rows], ignore_index=True)
+    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_other_rows, trademarks_df_us_rows], ignore_index=True)
     # st.write(trademarks_df)
     design_patents_df = pd.concat([design_patents_df_eu_rows, design_patents_df_us_rows, design_patents_df_cn_rows, design_patents_df_int_rows], ignore_index=True)
     # st.write(trademarks_df)
