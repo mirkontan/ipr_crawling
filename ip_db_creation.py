@@ -322,8 +322,10 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
     # st.write(trademarks_df_eu_rows)   
     # trademarks_df_eu_rows['HTML'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Markendarstellung</td>').str[1]
-    parsed_tm_jurisdictions.append([trademarks_df_eu_rows['IPR_JURISDICTION'])
+    
+    parsed_tm_jurisdictions.append(trademarks_df_eu_rows['IPR_JURISDICTION'])
     st.write(parsed_tm_jurisdictions)
+    
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].fillna('-')
     trademarks_df_eu_rows['IPR_REG_NAME'] = trademarks_df_eu_rows['IPR_REG_NAME'].str.split(r'</td></tr><tr><td data-th="INID">').str[0]
