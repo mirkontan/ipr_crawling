@@ -69,6 +69,10 @@ def process_xlsx_file(xlsx_file):
                 parseable_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://branddb.wipo.int/en/quicksearch/brand/MY5019{row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
+            elif row['IPR_JURISDICTION'] == 'COLOMBIA':
+                parseable_tm_jurisdictions.append(jurisdiction)
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.tmdn.org/tmview-can/#/tmview/detail/CO5000000{iprregnum}'
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'PHILIPPINES':
                 parseable_tm_jurisdictions.append(jurisdiction)
                 # Split the iprregnum string by '-' and get the last part
@@ -279,6 +283,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_kr_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['KOREA'])]
     trademarks_df_it_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['ITALY'])]
     trademarks_df_jp_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['JAPAN'])]
+    trademarks_df_co_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['COLOMBIA'])]
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
 
     design_patents_df_eu_rows['IPR_REG_NAME'] = design_patents_df_eu_rows['HTML'].str.split(r'<td data-th="Kriterium">Wortlaut der Marke</td>').str[1]
@@ -630,7 +635,7 @@ def process_xlsx_file(xlsx_file):
 
 
 
-    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_kr_rows, trademarks_df_jp_rows, trademarks_df_it_rows, trademarks_df_us_rows], ignore_index=True)
+    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_kr_rows, trademarks_df_jp_rows, trademarks_df_it_rows, trademarks_df_us_rows, trademarks_df_co_rows], ignore_index=True)
     # st.write(trademarks_df)
     design_patents_df = pd.concat([design_patents_df_eu_rows, design_patents_df_us_rows, design_patents_df_cn_rows, design_patents_df_int_rows], ignore_index=True)
     # st.write(trademarks_df)
