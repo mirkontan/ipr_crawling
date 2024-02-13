@@ -245,7 +245,7 @@ def process_xlsx_file(xlsx_file):
                 html_content = cn_extract_section_from_url(url)
             elif 'INTERNATIONAL' in jurisdiction:
                 html_content = int_extract_section_from_url(url)
-            elif 'INDONESIAN' in jurisdiction:
+            elif 'INDONESIA' in jurisdiction:
                 html_content = indo_extract_section_from_url(url)
             elif 'EUROPE' in jurisdiction:
                 html_content = fetch_html_content(url, timeout=200)            
@@ -266,7 +266,7 @@ def process_xlsx_file(xlsx_file):
     invention_patents_df = df_combined[df_combined['IPR_TYPE'] == 'INVENTION PATENT']    
     
     # Filter df_combined based on the list of exclude_values
-    all_others_tm_rows = trademarks_df[~trademarks_df['IPR_JURISDICTION'].isin(not_parsed_tm_jurisdictions)]
+    all_others_tm_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(not_parsed_tm_jurisdictions)]
     all_others_design_rows = design_patents_df[~design_patents_df['IPR_JURISDICTION'].isin(parseable_design_jurisdictions)]
     
     # Combine the unparseable DataFrames
