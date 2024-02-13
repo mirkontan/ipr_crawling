@@ -682,10 +682,11 @@ def process_xlsx_file(xlsx_file):
     
     # Reorder the columns
     new_column_order = ['id', 'IPR', 'IPR_TYPE', 'IPR_TRADEMARK_TYPE', 'IPR_IMAGE_URL', 'IPR_JURISDICTION', 
-                        'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_DATABASE_URL', 
+                        'IPR_NICE_CLASS', 'IPR_REGISTRATION_DATE', 'IPR_EXPIRATION_DATE', 'IPR_DATABASE_URL', 'IPR_HOLDER', 'IPR_NICE_CLASSES_ALL',  
                         'IPR_REGISTRATION_NUMBER', 'IPR_DESIGNATIONS', 'NOTES', 'IPR_REG_NAME2', 'IPR_REG_NAME', 
-                        'IPR_STATUS', 'IPR_TYPEhtml', 'IPR_HOLDER', 'IPR_NICE_CLASSES_ALL', 'IPR_SUBCLASSES', 
+                        'IPR_STATUS', 'IPR_TYPEhtml', 'IPR_SUBCLASSES', 
                         'IPR_SUBCLASSESdetails', 'IPR_LINK_TO_ONLINE_DATABASE']
+
 
     df_combined = df_combined.reindex(columns=new_column_order)
 
