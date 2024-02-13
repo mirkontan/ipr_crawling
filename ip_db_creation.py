@@ -277,8 +277,11 @@ def process_xlsx_file(xlsx_file):
     design_patents_df_int_rows = design_patents_df[design_patents_df['IPR_JURISDICTION'].isin(['INTERNATIONAL'])]
    
     parsed_designs_jurisdictions.append(design_patents_df_eu_rows['IPR_JURISDICTION'])
-    parsed_designs_jurisdictions = list(parsed_designs_jurisdictions)
+    # Convert elements to tuples before converting to a set
+    parsed_designs_jurisdictions = parsed_designs_jurisdictions.apply(tuple)
     parsed_designs_jurisdictions = set(parsed_designs_jurisdictions)
+
+    parsed_designs_jurisdictions = list(parsed_designs_jurisdictions)
     # Convert the set back to a list if needed
     st.write(parsed_designs_jurisdictions)
     
