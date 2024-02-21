@@ -162,6 +162,12 @@ def process_xlsx_file(xlsx_file):
     st.write(df_import)
     
     df_import['IPR_LINK_TO_ONLINE_DATABASE'] = '-'
+    df_import['IPR_JURISDICTION'] = df_import['IPR_JURISDICTION'].str.upper()
+    df_import['IPR_JURISDICTION'] = df_import['IPR_JURISDICTION'].str.replace('MAINLAND CHINA', 'PEOPLE'S REPUBLIC OF CHINA', regex=False)
+    df_import['IPR_JURISDICTION'] = df_import['IPR_JURISDICTION'].str.replace('WIPO', 'INTERNATIONAL', regex=False)
+    df_import['IPR_JURISDICTION'] = df_import['IPR_JURISDICTION'].str.replace('GLOBAL', 'INTERNATIONAL', regex=False)
+
+    
     df_combined = df_import.apply(create_ipr_url, axis=1)
     df_combined = df_combined.dropna(subset=['IPR'])
 
