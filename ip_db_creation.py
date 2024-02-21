@@ -352,6 +352,10 @@ def process_xlsx_file(xlsx_file):
 
     # Filter rows where 'IPR_JURISDICTION' contains 'UNITED STATES'
     trademarks_df_us_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].str.contains('UNITED STATES')]
+   
+    # Filter rows where 'IPR_JURISDICTION' contains 'UNITED KINGDOM'
+    trademarks_df_uk_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin('UNITED KINGDOM')]
+    st.write(trademarks_df_uk_rows)   
     
     # Filter rows where 'IPR_JURISDICTION' contains 'EUROPE'
     trademarks_df_eu_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin(['EUROPE', 'GERMANY'])]
@@ -659,7 +663,7 @@ def process_xlsx_file(xlsx_file):
 
     
 
-    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_us_rows], ignore_index=True)
+    trademarks_df = pd.concat([trademarks_df_int_rows, trademarks_df_cn_rows, trademarks_df_indo_rows, trademarks_df_eu_rows, trademarks_df_us_rows, trademarks_df_uk_rows], ignore_index=True)
     # st.write(trademarks_df)
     design_patents_df = pd.concat([design_patents_df_eu_rows, design_patents_df_us_rows, design_patents_df_cn_rows, design_patents_df_int_rows], ignore_index=True)
     # st.write(trademarks_df)
