@@ -41,11 +41,11 @@ def process_xlsx_file(xlsx_file):
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://register.dpma.de/DPMAregister/marke/registerhabm?AKZ={row["IPR_REGISTRATION_NUMBER"]}'
                 row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'UNITED KINGDOM':
-                not_parsed_tm_jurisdictions.append(jurisdiction)
+                parsed_tm_jurisdictions.append(jurisdiction)
                 # Remove 'UK' from iprregnum if present
                 iprregnum = iprregnum.replace('UK', '')
-                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://trademark-search.marcaria.com/en/result?number={iprregnum}&country=GB&classes=&status=1&mode=1&searchby=2'
-                row['IPR_DATABASE_URL'] = f'https://www.ipo.gov.uk/tmcase/Results/1/{row["IPR_REGISTRATION_NUMBER"]}'
+                row['IPR_LINK_TO_ONLINE_DATABASE'] = f'https://www.ipo.gov.uk/tmcase/Results/1/{row["IPR_REGISTRATION_NUMBER"]}'
+                row['IPR_DATABASE_URL'] = row['IPR_LINK_TO_ONLINE_DATABASE']
             elif row['IPR_JURISDICTION'] == 'ITALY':
                 not_parsed_tm_jurisdictions.append(jurisdiction)
                 row['IPR_LINK_TO_ONLINE_DATABASE'] = '-'
