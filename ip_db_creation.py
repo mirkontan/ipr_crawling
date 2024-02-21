@@ -167,7 +167,6 @@ def process_xlsx_file(xlsx_file):
     df_import['IPR_JURISDICTION'] = df_import['IPR_JURISDICTION'].str.replace('WIPO', 'INTERNATIONAL', regex=False)
     df_import['IPR_JURISDICTION'] = df_import['IPR_JURISDICTION'].str.replace('GLOBAL', 'INTERNATIONAL', regex=False)
 
-    st.write(df_import)    
     df_combined = df_import.apply(create_ipr_url, axis=1)
     df_combined = df_combined.dropna(subset=['IPR'])
 
@@ -188,7 +187,6 @@ def process_xlsx_file(xlsx_file):
     parseable_design_jurisdictions = set(parseable_design_jurisdictions)
     # Convert the set back to a list if needed
     parseable_design_jurisdictions = list(parseable_design_jurisdictions)
-    st.write(parseable_design_jurisdictions)
 
  
     # Function to fetch HTML content and extract a specific section
@@ -354,7 +352,7 @@ def process_xlsx_file(xlsx_file):
     trademarks_df_us_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].str.contains('UNITED STATES')]
    
     # Filter rows where 'IPR_JURISDICTION' contains 'UNITED KINGDOM'
-    trademarks_df_uk_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].isin('UNITED KINGDOM')]
+    trademarks_df_uk_rows = trademarks_df[trademarks_df['IPR_JURISDICTION'].str.contains('UNITED KINGDOM')]
     st.write(trademarks_df_uk_rows)   
     
     # Filter rows where 'IPR_JURISDICTION' contains 'EUROPE'
