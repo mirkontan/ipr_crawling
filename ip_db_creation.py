@@ -208,8 +208,20 @@ def process_xlsx_file(xlsx_file):
         
     # Function to fetch and return HTML content with a timeout
     def fetch_html_content(url, timeout=500):
+   #     try:
+    #        response = requests.get(url, timeout=timeout)
+    #        if response.status_code == 200:
+    #            return response.text  # Return the HTML content as a string
+    #        else:
+    #            return f"Failed to fetch HTML content from {url}"
+    #    except requests.exceptions.RequestException as e:
+    #        return f"An error occurred: {e}"
+
         try:
-            response = requests.get(url, timeout=timeout)
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+            }
+            response = requests.get(url, headers=headers, timeout=timeout)
             if response.status_code == 200:
                 return response.text  # Return the HTML content as a string
             else:
