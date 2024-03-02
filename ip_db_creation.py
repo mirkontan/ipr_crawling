@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import re
 from extract_data_html import extract_data_int
 from create_download_link import create_download_link
-
+import time
 
 # Function to process the uploaded XLSX file
 def process_xlsx_file(xlsx_file):
@@ -221,6 +221,8 @@ def process_xlsx_file(xlsx_file):
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
             }
+            time.sleep(5)  # Delay for 5 seconds
+
             response = requests.get(url, headers=headers, timeout=timeout)
             if response.status_code == 200:
                 return response.text  # Return the HTML content as a string
