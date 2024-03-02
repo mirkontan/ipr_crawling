@@ -287,7 +287,7 @@ def process_xlsx_file(xlsx_file):
             elif 'INDONESIA' in jurisdiction:
                 html_content = fetch_html_content(url, timeout=200)            
             elif 'EUROPE' in jurisdiction:
-                html_content = fetch_html_content(url, timeout=200)            
+                html_content = fetch_html_content(url, timeout=500)            
             elif 'GERMANY' in jurisdiction:
                 html_content = fetch_html_content(url, timeout=200)      
             elif 'UNITED KINGDOM' in jurisdiction:
